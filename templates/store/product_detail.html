@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- 🔥 IMAGE -->
+    <div class="col-md-6">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="img-fluid rounded shadow">
+        {% endif %}
+
+    </div>
+
+    <!-- 🔥 DETAILS -->
+    <div class="col-md-6">
+
+        <h2 class="fw-bold mb-3">
+            {{ product.name }}
+        </h2>
+
+        <h3 class="text-success mb-4">
+            ₹{{ product.price }}
+        </h3>
+
+        <p class="text-muted">
+            Premium quality shoes with stylish design 😎
+        </p>
+
+        <!-- 🛒 CART -->
+        <a href="{% url 'add_to_cart' product.id %}"
+           class="btn btn-custom btn-lg w-100 mb-3">
+
+           🛒 Add to Cart
+
+        </a>
+
+        <!-- ❤️ WISHLIST -->
+        <a href="{% url 'add_to_wishlist' product.id %}"
+           class="btn btn-outline-danger btn-lg w-100">
+
+           ❤️ Add to Wishlist
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

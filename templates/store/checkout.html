@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Checkout</h2>
+
+<input type="text"
+       id="name"
+       placeholder="Enter Name"
+       class="form-control mb-2">
+
+<textarea id="address"
+          placeholder="Enter Address"
+          class="form-control mb-3"></textarea>
+
+<!-- 🔥 Payment Method -->
+<select id="payment_method" class="form-control mb-3">
+
+    <option value="online">
+        Online Payment (Razorpay)
+    </option>
+
+    <option value="cod">
+        Cash on Delivery
+    </option>
+
+</select>
+
+<button id="pay-btn" class="btn btn-dark w-100">
+    Proceed
+</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+document.getElementById("pay-btn").onclick = function(){
+
+    var name = document.getElementById("name").value;
+    var address = document.getElementById("address").value;
+    var method = document.getElementById("payment_method").value;
+
+    // 🔥 Validation
+    if(name === "" || address === ""){
+        alert("Please fill all details");
+        return;
+    }
+
+    // 🔥 CASH ON DELIVERY
+    if(method === "cod"){
+
+        window.location.href =
+        "/cod-success/?name=" + name +
+        "&address=" + address;
+
+        return;
+    }
+
+    // 🔥 ONLINE PAYMENT
+    var amount = parseInt("{{ payment.amount }}");
+
+    var options = {
+
+        key: "{{ razorpay_key }}",
+        amount: amount,
+        currency: "INR",
+        name: "Shoe Store",
+
+        handler: function (){
+            alert("Payment Success");
+            window.location.href = "/payment-success/";
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+}
+
+</script>
+
+{% endblock %}

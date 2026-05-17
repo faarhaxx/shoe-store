@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4 fw-bold">📦 My Orders</h2>
+
+{% if orders %}
+
+<div class="table-responsive">
+<table class="table table-bordered text-center shadow-sm">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Action</th>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for order in orders %}
+        <tr>
+
+            <!-- VIEW BUTTON -->
+            <td>
+    <a href="{% url 'order_detail' order.id %}" class="btn btn-primary btn-sm">
+        View
+    </a>
+</td>
+                </a>
+            </td>
+
+            <td>#{{ order.id }}</td>
+            <td>{{ order.name }}</td>
+            <td class="text-success fw-bold">₹{{ order.total_amount }}</td>
+
+            <!-- STATUS -->
+            <td>
+                {% if order.status == "Pending" %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% elif order.status == "Paid" %}
+                    <span class="badge bg-success">Paid</span>
+                {% else %}
+                    <span class="badge bg-danger">Cancelled</span>
+                {% endif %}
+            </td>
+
+            <td>{{ order.created_at }}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+</div>
+
+{% else %}
+
+<div class="text-center mt-5">
+    <h4>No orders yet 😢</h4>
+    <a href="/" class="btn btn-dark mt-3">Shop Now</a>
+</div>
+
+{% endif %}
+
+{% endblock %}

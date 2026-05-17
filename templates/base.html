@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shoe Store</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 🔥 CUSTOM CSS -->
+    <style>
+
+body {
+    background: #f5f7fa;
+}
+
+/* 🔥 CARD HOVER */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.card-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* 🔥 IMAGE ZOOM */
+.card-hover img {
+    transition: transform 0.3s ease;
+}
+
+.card-hover:hover img {
+    transform: scale(1.1);
+}
+
+/* 🔥 BUTTON STYLE */
+.btn-custom {
+    background: linear-gradient(45deg, #198754, #20c997);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    background: linear-gradient(45deg, #157347, #198754);
+}
+
+.btn-custom:active {
+    transform: scale(0.95);
+}
+
+/* 🔥 TABLE HOVER */
+table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 🔥 NAVBAR */
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+/* 🔥 FOOTER */
+footer {
+    font-size: 14px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container">
+
+    <a class="navbar-brand fw-bold" href="/">👟 Shoe Store</a>
+
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+        <form class="d-flex ms-auto me-3" method="GET" action="/">
+    <input class="form-control me-2"
+           type="search"
+           name="q"
+           placeholder="Search shoes...">
+
+    <button class="btn btn-success">
+        Search
+    </button>
+</form>
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'my_orders' %}">Orders</a>
+        </li>
+
+        <!-- 🔥 LOGIN / SIGNUP LOGIC -->
+        {% if user.is_authenticated %}
+
+            <li class="nav-item">
+  <a class="nav-link" href="{% url 'profile' %}">
+      👤 {{ user.username }}
+    </a>
+
+        </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-danger" href="{% url 'logout' %}">Logout</a>
+            </li>
+
+        {% else %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+            </li>
+
+        {% endif %}
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- 🔥 CONTENT -->
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- 🔥 FOOTER -->
+<footer class="bg-dark text-white text-center p-3 mt-5">
+    © 2026 Shoe Store | Made by You 😎
+</footer>
+
+<!-- 🔥 Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
